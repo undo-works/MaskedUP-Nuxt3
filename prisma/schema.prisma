@@ -1,0 +1,99 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["rhel-openssl-3.0.x", "debian-openssl-3.0.x", "windows"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model enduser {
+  id           BigInt   @id @default(autoincrement())
+  created_at   DateTime @default(now()) @db.Timestamp(0)
+  user_id      String   @unique @db.VarChar(255)
+  user_name    String   @db.VarChar(255)
+  password     String   @db.VarChar(255)
+  introduce_ja String?  @db.Text
+  icon_image   String?  @db.VarChar(255)
+  back_image   String?  @db.VarChar(255)
+  post         post[]
+}
+
+model post {
+  id            BigInt   @id @default(autoincrement())
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+  user_table_id BigInt
+  body_ja       String   @db.Text
+  mask_heart    Int?     @db.UnsignedInt
+  mask_repost   Int?     @db.UnsignedInt
+  lat           Decimal? @db.Decimal(16, 14)
+  lng           Decimal? @db.Decimal(17, 14)
+  enduser       enduser  @relation(fields: [user_table_id], references: [id], map: "fk_post_user")
+
+  @@index([user_table_id], map: "fk_post_user")
+}
+
+model good {
+  id            BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+  post_table_id BigInt   @db.UnsignedBigInt
+  user_table_id BigInt   @db.UnsignedBigInt
+
+  @@unique([post_table_id, user_table_id], map: "post_table_id")
+}
+
+model follow {
+  id                      BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  created_at              DateTime @default(now()) @db.Timestamp(0)
+  following_user_table_id BigInt   @db.UnsignedBigInt
+  followed_user_table_id  BigInt   @db.UnsignedBigInt
+
+  @@unique([following_user_table_id, followed_user_table_id], map: "followed_following_key")
+}
+
+model post_image {
+  id            BigInt  @id @default(autoincrement()) @db.UnsignedBigInt
+  post_table_id BigInt  @db.UnsignedBigInt
+  image_url     String  @db.VarChar(255)
+  user_table_id BigInt? @db.UnsignedBigInt
+}
+
+model t_reply {
+  id             BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  created_at     DateTime @default(now()) @db.Timestamp(0)
+  user_table_id  BigInt?  @db.UnsignedBigInt
+  post_table_id  BigInt?  @db.UnsignedBigInt
+  reply_table_id BigInt?  @db.UnsignedBigInt
+  body_ja        String?  @db.Text
+}
+
+model reply_image {
+  id             BigInt @id @default(autoincrement()) @db.UnsignedBigInt
+  reply_table_id BigInt @db.UnsignedBigInt
+  user_table_id  BigInt @db.UnsignedBigInt
+  image_url      String @db.VarChar(255)
+}
+
+model reply_good {
+  id             BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  created_at     DateTime @default(now()) @db.Timestamp(0)
+  reply_table_id BigInt   @db.UnsignedBigInt
+  user_table_id  BigInt   @db.UnsignedBigInt
+}
+
+model t_repost {
+  id            BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+  post_table_id BigInt   @db.UnsignedBigInt
+  user_table_id BigInt   @db.UnsignedBigInt
+}
+
+model t_token {
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+  user_table_id BigInt   @db.UnsignedBigInt
+  user_agent    String   @db.VarChar(255)
+  fcm_token     String   @db.VarChar(255)
+
+  @@unique([user_table_id, user_agent], map: "device_unique")
+}

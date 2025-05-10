@@ -1,0 +1,9 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "Maskedup-Nuxt3"
+resolve_s3 = true
+s3_prefix = "Maskedup-Nuxt3"
+region = "ap-northeast-1"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "StackFamily=\"nuxtjs-lambda-app\""
+image_repositories = []

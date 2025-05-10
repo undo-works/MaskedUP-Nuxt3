@@ -1,0 +1,39 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+#lock.jsonいらない気がする
+package-lock.json
+
+# prismaのmigrateの結果とか
+prisma/migrations/
+
+# sam関連ファイル
+.aws-sam
+
+# 前に使ってたやつ
+botor.service
+
+# Lambdaのテンプレート
+template.yaml

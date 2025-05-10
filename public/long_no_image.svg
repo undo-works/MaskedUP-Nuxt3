@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_レイヤー_1" data-name="レイヤー 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1072 360">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #b3b3b3;
+      }
+
+      .cls-1, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        font-family: BrandonGrotesque-Regular, 'Brandon Grotesque';
+        font-size: 96px;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g>
+    <rect class="cls-3" x="12" y="12" width="1048" height="336"/>
+    <path class="cls-1" d="M1048,24v312H24V24h1024M1072,0H0v360h1072V0h0Z"/>
+  </g>
+  <text class="cls-2" transform="translate(292.36 216.09)"><tspan x="0" y="0">NO IMAGE</tspan></text>
+</svg>
